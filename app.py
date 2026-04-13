@@ -67,13 +67,19 @@ for f in csv_files:
     remove_conferences(df)
 
     df['team'] = df['team'] + str(year + i)
-
+    
     if filename == "CFB21.CSV":
         df[['win', 'loss']] = df['win_loss'].str.split('-', expand=True).astype(int)
         df.drop(['win_loss'], axis=1, inplace=True)
-
+    
+    missing_cols = [col for col in cfb_values if col not in df.columns]
+    
+    if missing_cols:
+        st.warning(f"{filename} missing columns: {missing_cols}")
+        continue
+    
     df = df[cfb_values]
-
+    
     team_count = df['team'].count()
     max_team_count = max(max_team_count, team_count)
 
