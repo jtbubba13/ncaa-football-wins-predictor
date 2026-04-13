@@ -50,7 +50,7 @@ i = 0
 max_team_count = 0
 
 for f in csv_files:
-    filename = f.split("\\")[-1].upper()
+    filename = os.path.basename(f).upper()
 
     if filename == "CFB22.CSV":
         df22 = pd.read_csv(f)
